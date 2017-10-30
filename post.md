@@ -27,6 +27,24 @@ module.exports = {
   ]
 };
 
+# Cloudinary
+
+npm install cloudinary-core --save
+npm install --save "@cloudinary/angular-4.x"
+
+app.module.js
+
+import { CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular-4.x';
+import { Cloudinary } from 'cloudinary-core';
+
+imports: [
+  BrowserModule,
+  CloudinaryModule.forRoot({Cloudinary}, { cloud_name: 'dc3dnmmpx' } as CloudinaryConfiguration)
+],
+
+- create card component
+- add card component to app.module.js
+- change app.component.html to use your card component
 
 # Manifest.json
 
