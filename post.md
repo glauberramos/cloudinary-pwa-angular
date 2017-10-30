@@ -9,6 +9,25 @@ We are going to explain the most important steps to transform your app into a PW
 ng new angular-pwa
 ng serve to check the project
 
+# Workbox CLI
+
+npm install --save-dev workbox-cli
+
+"build": "ng build && workbox-cli generate:sw"
+
+workbox-cli-config.js
+module.exports = {
+  "globDirectory": "dist/",
+  "globPatterns": [
+    "**/*.{ico,html,js,map}"
+  ],
+  "swDest": "dist/sw.js",
+  "globIgnores": [
+    "../workbox-cli-config.js"
+  ]
+};
+
+
 # Manifest.json
 
 Adding a `manifest.json` is essential if you want your app to look like a native app. It will make your app have a splash screen, be able to be installed on a device home-screen and also hide the native URL bar from the browser.
