@@ -88,7 +88,28 @@ Adding a `manifest.json` is essential if you want your app to look like a native
 }
 ```
 
-<!--<script src="https://gist.github.com/glauberramos/e01c4423b6274c9b19ebf6e4af2c2eac.js"></script>-->
+angular-cli.json
+"assets": [
+	 "assets",
+	"favicon.ico",
+	"cloudinary.png",
+	"manifest.json"
+	],
+
+index.html
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="application-name" content="cloudinary-pwa-angular">
+<meta name="apple-mobile-web-app-title" content="cloudinary-pwa-angular">
+<meta name="theme-color" content="#0e2f5a">
+<meta name="msapplication-navbutton-color" content="#0e2f5a">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="msapplication-starturl" content="/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="cloudinary_logo.png">
+<link rel="apple-touch-icon" href="cloudinary_logo.png">
 
 # Cloudinary service
 

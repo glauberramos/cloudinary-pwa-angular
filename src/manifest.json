@@ -1,0 +1,16 @@
+{
+  "name": "Cloudinary PWA Angular",
+  "short_name": "Cloudinary PWA",
+  "lang": "en-US",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#0e2f5a",
+  "background_color": "#0e2f5a",
+  "icons": [
+    {
+      "src": "cloudinary.png",
+      "sizes": "1000x1000",
+      "type": "image/png"
+    }
+  ]
+}
