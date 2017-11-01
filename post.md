@@ -46,6 +46,25 @@ imports: [
 - add card component to app.module.js
 - change app.component.html to use your card component
 
+# Cache cloudinary
+
+<script>
+   if (navigator.serviceWorker) {
+     navigator.serviceWorker.register('./sw.js')
+     .catch(function(err) {
+       console.error('Unable to register service worker.', err);
+     });
+   }
+ </script>
+
+  ],
+  "maximumFileSizeToCacheInBytes": 5242880,
+  "runtimeCaching": [
+    {
+      urlPattern: 'https://res.cloudinary.com/dc3dnmmpx/image/upload/(.*)',
+      handler: 'staleWhileRevalidate'
+    }
+
 # Manifest.json
 
 Adding a `manifest.json` is essential if you want your app to look like a native app. It will make your app have a splash screen, be able to be installed on a device home-screen and also hide the native URL bar from the browser.
