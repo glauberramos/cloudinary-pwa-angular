@@ -1,75 +1,212 @@
-Progressive Web Apps (PWA) are a easy way to improve your application's user experience and to make regular web apps function the same as any native app. Because of that, adapting your app to become a PWA has become very important nowadays. For more information about what is a PWA you can check [Google's site](https://developers.google.com/web/progressive-web-apps/).
+Progressive Web Apps (PWA) are a easy way to improve your application's user experience and conversion rates. Adapting your app to become a PWA has become very important nowadays and many companies are already taking advantage of that and you can see here some [testimonies](https://developers.google.com/web/showcase/)
 
-We are going to explain the most important steps to transform your app into a PWA, for that we built a simple app that you can check the code on [Code Pen](https://codepen.io/glauberramos/project/editor/DnaLdk) and see the live version as well [here](https://2a75b8d4c4844eb29f3e33f1a9ade1dd.codepen.website/), we built it using [Angular](https://angular.io/), [Workbox](https://workboxjs.org/) and [Cloudinary](https://cloudinary.com/).
+### Here is a summary of what this project will cover:
+
+- We built a image gallery displaying the most famous digital entrepeneurs of our time
 
 ![pwa app](http://res.cloudinary.com/dc3dnmmpx/image/upload/v1507607032/pwaapp.png "PWA App")
 
-# Angular CLI
+- Our app works offline and is built with [Angular](https://angular.io/) and [Workbox](https://workboxjs.org/).
+- Because Progressive Web Apps need to be fast, we used [Cloudinary](https://cloudinary.com/) to store our images that is a an end-to-end media management service.
+- Native app-like behavior when launched and posibility of installing on your home screen.
 
-ng new angular-pwa
-ng serve to check the project
+We are now going to give you a step by step on how to create a simple PWA.
 
-# Workbox CLI
+# Step 1 - Setting up Angular
 
-npm install --save-dev workbox-cli
+We are going to use Angular CLI to initialize the base code for our application. Make sure you have angular CLI installed on your computer.
 
-"build": "ng build && workbox-cli generate:sw"
+To create the project run:
+`ng new angular-pwa`
 
-workbox-cli-config.js
+Access your project with:
+`cd angular-pwa`
+
+Run `npm install` then `npm start` to run your application.
+
+You can check the final code for this step [here](https://github.com/glauberramos/cloudinary-pwa-angular/tree/angular-pwa-step-1)
+
+# Step 2 - Setting up service worker with Workbox
+
+Service worker is a independent background process that run in the browser. It does not use the main thread and it can be used to cache your application files so you can access it offline.
+
+We are going to create a service worker using Workbox CLI. Workbox is a set of libraries created by google to make it easier to generate your service worker.
+
+We are going to cache the application shell. The application shell is all the static files (html, css and js) that your application contains.
+
+Start with installing workbox-cli:
+
+`npm install --save-dev workbox-cli`
+
+Workbox cli uses a configuration file to generate your service worker. Create a config file `workbox-cli-config.js` in your main folder. And insert this code:
+
+```javacript
 module.exports = {
   "globDirectory": "dist/",
   "globPatterns": [
     "**/*.{ico,html,js,map}"
   ],
+  "maximumFileSizeToCacheInBytes": 5242880,
   "swDest": "dist/sw.js",
   "globIgnores": [
     "../workbox-cli-config.js"
   ]
 };
+```
 
-# Cloudinary
+You are basically telling Workbox to cache all your `ico,html,js,map` files and to generate a file called `sw.js` inside your `dist` folder.
 
-npm install cloudinary-core --save
-npm install --save "@cloudinary/angular-4.x"
+Now we are going to integrate the generation inside your build process, you can chance that on your `package.json`:
 
-app.module.js
+`"build": "ng build && workbox-cli generate:sw"`
 
+Now everytime you run `npm build` you are going to export all your files to `dist` folder and also generate a service worker.
+
+You can check the final code for this step [here](https://github.com/glauberramos/cloudinary-pwa-angular/tree/angular-pwa-step-2)
+
+# Step 3 - Image gallery with Cloudinary
+
+Cloudinary is a media managent service that provides storage, delivery, transformation, optimization of media for your application.
+
+We are going to use Cloudinary's Angular library to connect in our application.
+
+`npm install cloudinary-core --save`
+
+`npm install "@cloudinary/angular-4.x" --save`
+
+inside your `app.module.js` file change the following code:
+
+```javascript
 import { CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular-4.x';
 import { Cloudinary } from 'cloudinary-core';
+```
 
+We already created an user on Cloudinary and uploaded some images to serve on our application. You will need to setup your user cloud name on the following code inside `app.module.js`:
+
+```javascript
 imports: [
   BrowserModule,
   CloudinaryModule.forRoot({Cloudinary}, { cloud_name: 'dc3dnmmpx' } as CloudinaryConfiguration)
-],
+]
+```
 
-- create card component
-- add card component to app.module.js
-- change app.component.html to use your card component
+### Create card component
 
-# Cache cloudinary
+We are going going to create our image library. First create a folder called `card` inside `src` folder. And generate 3 files:
 
+`card.component.html`
+
+```html
+<div class="card-content">
+  <cl-image public-id={{id}} class="thumbnail inline" format="jpg"></cl-image>
+  <h4>{{title}}</h4>
+  <p>{{desc}}</p>
+</div>
+```
+
+`card.component.ts`
+
+```javascript
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'card',
+  templateUrl: './card.component.html',
+  styleUrls: ['./card.component.css']
+})
+export class CardComponent {
+  @Input() id: string;
+  @Input() title: string;
+  @Input() desc: string;
+}
+```
+
+`card.component.css`
+
+```javascript
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'card',
+  templateUrl: './card.component.html',
+  styleUrls: ['./card.component.css']
+})
+export class CardComponent {
+  @Input() id: string;
+  @Input() title: string;
+  @Input() desc: string;
+}
+```
+
+Now we need to add the card component inside `app.module.js`
+
+```javascript
+import { CardComponent } from '../card/card.component';
+```
+
+```javascript
+declarations: [
+  AppComponent,
+  CardComponent
+]
+```
+
+Now we need to use the inside app.component.html
+
+```html
+<header>
+  <span>Internet Entrepreneurs Gallery</span>
+</header>
+<main>
+  <div class="wrapper">
+    <div class="cards">
+      <card id="google" title="Larry Page and Sergey Brin" desc="Lorem ipsum dolor sit amet, ea postea graeci meliore pro. Stet choro nostrum ex quo, est dicant nonumy philosophia ne. "></card>
+      <card id="facebook" title="Mark Zuckerberg" desc="Lorem ipsum dolor sit amet, ea postea graeci meliore pro. Stet choro nostrum ex quo, est dicant nonumy philosophia ne. "></card>
+      <card id="apple" title="Steve Jobs" desc="Lorem ipsum dolor sit amet, ea postea graeci meliore pro. Stet choro nostrum ex quo, est dicant nonumy philosophia ne. "></card>
+      <card id="microsoft" title="Bill Gates" desc="Lorem ipsum dolor sit amet, ea postea graeci meliore pro. Stet choro nostrum ex quo, est dicant nonumy philosophia ne. "></card>
+      <card id="amazon" title="Jeff Bezos" desc="Lorem ipsum dolor sit amet, ea postea graeci meliore pro. Stet choro nostrum ex quo, est dicant nonumy philosophia ne. "></card>
+      <card id="tesla" title="Elon Musk" desc="Lorem ipsum dolor sit amet, ea postea graeci meliore pro. Stet choro nostrum ex quo, est dicant nonumy philosophia ne. "></card>
+    </div>
+  </div>
+</main>
+```
+
+You can check the final code for this step [here](https://github.com/glauberramos/cloudinary-pwa-angular/tree/angular-pwa-step-3)
+
+# Step 4 - Cache external calls
+
+We already cached our application files but now we need to cache all external calls that our app is calling. In order to use the service worker we need to add a code to install it inside `index.html`
+
+```html
 <script>
-   if (navigator.serviceWorker) {
-     navigator.serviceWorker.register('./sw.js')
-     .catch(function(err) {
-       console.error('Unable to register service worker.', err);
-     });
-   }
- </script>
+if (navigator.serviceWorker) {
+ navigator.serviceWorker.register('./sw.js')
+ .catch(function(err) {
+   console.error('Unable to register service worker.', err);
+ });
+}
+</script>
+```
 
-  ],
-  "maximumFileSizeToCacheInBytes": 5242880,
-  "runtimeCaching": [
-    {
-      urlPattern: 'https://res.cloudinary.com/dc3dnmmpx/image/upload/(.*)',
-      handler: 'staleWhileRevalidate'
-    }
+Now that we have our service worker installed let's add a configuration inside `workbox-cli-config.json`. This code will cache any call to Cloudinary services and will will execute runtime caching.
 
-# Manifest.json
+```javascript
+"runtimeCaching": [
+{
+  urlPattern: 'https://res.cloudinary.com/dc3dnmmpx/image/upload/(.*)',
+  handler: 'staleWhileRevalidate'
+}
+```
+
+This was the last step to make our app work offline. Now we need to make our app behave like a native app and be able to be installed in your device homescreen.
+
+You can check the final code for this step [here](https://github.com/glauberramos/cloudinary-pwa-angular/tree/angular-pwa-step-4)
+
+# Step 5 - Adding a manifest.json
 
 Adding a `manifest.json` is essential if you want your app to look like a native app. It will make your app have a splash screen, be able to be installed on a device home-screen and also hide the native URL bar from the browser.
 
-```
+```json
 {
   "name": "Cloudinary PWA Angular",
   "short_name": "Cloudinary PWA",
@@ -88,15 +225,20 @@ Adding a `manifest.json` is essential if you want your app to look like a native
 }
 ```
 
-angular-cli.json
-"assets": [
-	 "assets",
-	"favicon.ico",
-	"cloudinary.png",
-	"manifest.json"
-	],
+We need to make `angular-cli.json` to copy the manifest.json and our logo `cloudinary.png` to dist folder. You can make this happen with this change:
 
-index.html
+```json
+"assets": [
+  "assets",
+  "favicon.ico",
+  "cloudinary.png",
+  "manifest.json"
+]
+```
+
+We are also going to update our `index.html` with all meta tags for enable mobile support and to link our `manifest.json`
+
+```html
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="application-name" content="cloudinary-pwa-angular">
@@ -110,6 +252,16 @@ index.html
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="cloudinary_logo.png">
 <link rel="apple-touch-icon" href="cloudinary_logo.png">
+```
+
+You can check the final code for this step [here](https://github.com/glauberramos/cloudinary-pwa-angular/tree/angular-pwa-step-5)
+
+# Conclusion
+
+It's crucial nowadays to optmize for slow connections and for mobile devices. PWA's solves those problem very easily, and with the power of Workbox and Cloudinary you can transform your app into a PWA very easily.
+
+The full code for this project can be found on [Github](https://github.com/glauberramos/cloudinary-pwa-angular) also on [CodePen](https://codepen.io/glauberramos/project/editor/DnaLdk) and you can check the live version [here](https://2a75b8d4c4844eb29f3e33f1a9ade1dd.codepen.website/).
+
 
 # Cloudinary service
 
@@ -225,9 +377,3 @@ workboxSW.router.registerRoute('https://unpkg.com/(.*)', workboxSW.strategies.st
 ```
 
 <!--<script src="https://gist.github.com/glauberramos/1c87e820b9cf970c1fca8070c2765551.js"></script>-->
-
-# Conclusion
-
-It's crucial nowadays to optmize for slow connections and for mobile devices. PWA's solves those problem very easily, and with the power of Workbox and Cloudinary you can transform your app into a PWA very easily.
-
-The full code for this project can be found on [Github](https://github.com/glauberramos/cloudinary-pwa-angular) also on [CodePen](https://codepen.io/glauberramos/project/editor/DnaLdk) and you can check the live version [here](https://2a75b8d4c4844eb29f3e33f1a9ade1dd.codepen.website/).
