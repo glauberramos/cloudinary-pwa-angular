@@ -335,4 +335,4 @@ If you want to use Surge you need to have it installed `npm install -g surge` an
 
 It's crucial nowadays to optmize for slow connections and for mobile devices. PWA's solves those problem very easily, and with the power of Workbox and Cloudinary you can transform your app into a PWA very easily.
 
-The full code for this project can be found on [Github](https://github.com/glauberramos/cloudinary-pwa-angular) also on [CodePen](https://codepen.io/glauberramos/project/editor/DnaLdk) and you can check the live version [here](https://2a75b8d4c4844eb29f3e33f1a9ade1dd.codepen.website/).
+The full code for this project can be found on [Github](https://github.com/glauberramos/cloudinary-pwa-angular) and you can check the live version [here](https://angular-pwa.surge.sh/).
