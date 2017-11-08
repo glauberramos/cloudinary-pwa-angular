@@ -331,6 +331,10 @@ Now that we finished the code you can run `npm run build` and go inside `dist` f
 
 If you want to use Surge you need to have it installed `npm install -g surge` and then just run `surge` inside the `dist` folder. You can check our app live here [https://angular-pwa.surge.sh/](https://angular-pwa.surge.sh/). Just make sure you access it using HTTPS because PWAs requires secure access.
 
+If you want to check if your files are really being cached, go inside the tab `network` on chrome developer tools. The column Size should contain `(from ServiceWorker)`.
+
+![service worker](http://res.cloudinary.com/dc3dnmmpx/image/upload/v1510111279/serviceworker.png)
+
 # Conclusion
 
 It's crucial nowadays to optmize for slow connections and for mobile devices. PWA's solves those problem very easily, and with the power of Workbox and Cloudinary you can transform your app into a PWA very easily.
