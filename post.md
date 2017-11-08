@@ -1,4 +1,6 @@
-Progressive Web Apps (PWA) are a easy way to improve your application's user experience and conversion rates. Adapting your app to become a PWA has become very important nowadays and many companies are already doing that, you can check some testimonies [here](https://developers.google.com/web/showcase/).
+Progressive Web Apps (PWA) are a easy way to improve your application's user experience and conversion rates. PWAs are a set of techniques and technologies to enable your app to have the same characteristics of a native app. Many companies are already doing that, you can check some of those companies testimonies [here](https://developers.google.com/web/showcase/).
+
+We are going to build a simple app to showcase how easy is to build a PWA and this post contains a step by step guide to show you how do do it.
 
 ### Here is a summary of what this project will cover:
 
@@ -9,8 +11,6 @@ Progressive Web Apps (PWA) are a easy way to improve your application's user exp
 - Our app works offline and is built with [Angular](https://angular.io/) and [Workbox](https://workboxjs.org/).
 - Because Progressive Web Apps need to be fast, we used [Cloudinary](https://cloudinary.com/) to store our images that is a an end-to-end media management service.
 - Native app-like behavior when launched and posibility of installing on your home screen.
-
-We are now going to give you a step by step on how to create a simple PWA.
 
 # Step 1 - Setting up Angular
 
