@@ -14,7 +14,7 @@ We are going to build a simple app to showcase how easy is to build a PWA and th
 
 # Step 1 - Setting up Angular
 
-We are going to use Angular CLI to initialize the basecode for your application. Make sure you have angular CLI installed on your computer.
+We are going to use Angular CLI to initialize the basecode for your application. Make sure you have angular CLI installed on your computer and the latest version of node and npm.
 
 To create the project run `ng new angular-pwa`
 
@@ -32,9 +32,9 @@ We are going to first cache all the static files of your aplication (HTML, CSS a
 
 Start with installing workbox-cli:
 
-`npm install --save-dev workbox-cli`
+`npm install --save workbox-cli`
 
-Workbox cli uses a configuration file to generate your service worker. Create a config file `workbox-cli-config.js` in your main folder. And insert this code:
+Workbox cli uses a configuration file to generate your service worker. Create a config file `workbox-cli-config.js` in your project root folder. And insert this code:
 
 ```javacript
 module.exports = {
@@ -54,7 +54,7 @@ You are basically telling Workbox to cache all your `ico, html, js, map` files a
 
 Now we are going to integrate the generation inside your build process, you can change that on your `package.json`:
 
-`"build": "ng build && workbox-cli generate:sw"`
+`"build": "ng build && workbox generate:sw",`
 
 Now everytime you run `npm run build` you are going to export all your files to `dist` folder and also generate a service worker.
 
@@ -70,14 +70,14 @@ We are going to use Cloudinary's Angular library to connect in our application.
 
 `npm install "@cloudinary/angular-4.x" --save`
 
-inside your `stc/app/app.module.ts` file change the following code:
+inside your `src/app/app.module.ts` file add the following code:
 
 ```javascript
 import { CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular-4.x';
 import { Cloudinary } from 'cloudinary-core';
 ```
 
-We already created an user on Cloudinary and uploaded some images to serve on our application. If you want to can create your own and update the `cloud_name` property. Now add the following code inside `src/app/app.module.ts`:
+We already created an user on Cloudinary and uploaded some images to serve on our application. If you want to can create your own and update the `cloud_name` property. Now change the following code inside `src/app/app.module.ts`:
 
 ```javascript
 imports: [
@@ -151,7 +151,7 @@ declarations: [
 ],
 ```
 
-Now we need to use the Card inside `src/app/app.component.html`. You can just change the whole file with the following code:
+Now we need to use the Card inside `src/app/app.component.html`. You can just replace the whole file with the following code:
 
 ```html
 <header>
@@ -260,7 +260,7 @@ Now that we have our service worker installed let's add a configuration inside `
 "runtimeCaching": [{
   urlPattern: 'https://res.cloudinary.com/dc3dnmmpx/image/upload/(.*)',
   handler: 'staleWhileRevalidate'
-}]
+}],
 ```
 
 This was the last step to make your app work offline. Now we need to make your app behave like a native app and this will enable it to be installed in your device homescreen.
@@ -292,7 +292,7 @@ Adding a `src/manifest.json` is essential if you want your app to look like a na
 
 We also need a image to be displayed when you install your app in your device. We used this image [here](https://github.com/glauberramos/cloudinary-pwa-angular/blob/master/src/cloudinary.png), and we added inside `src` folder.
 
-Everytime you run `npm build`, all the files for your application are generated inside `dist` folder. Since we added 2 new files we need to update the code for copying those files as well.
+Everytime you run `npm run build`, all the files for your application are generated inside `dist` folder. Since we added two new files we need to update the code for copying those files as well.
  
 We need to make `angular-cli.json` to copy the manifest.json and our logo `cloudinary.png` to `dist` folder. You can make this happen with this change:
 
