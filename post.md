@@ -14,7 +14,7 @@ We are going to build a simple app to showcase how easy is to build a PWA and th
 
 # Step 1 - Setting up Angular
 
-We are going to use Angular CLI to initialize the basecode for your application. Make sure you have angular CLI installed on your computer and the latest version of node and npm.
+We are going to use Angular CLI to initialize the basecode for your application. Make sure you have angular CLI 1.4+ installed on your computer `npm install @angular/cli@1.4.9 -g`, this tutorial does not work with angular CLI 1.5, if you want to know more you can follow this [issue](https://github.com/cloudinary/cloudinary_angular/issues/114).
 
 To create the project run `ng new angular-pwa`
 
