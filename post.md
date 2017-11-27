@@ -14,7 +14,7 @@ We are going to build a simple app to showcase how easy is to build a PWA and th
 
 # Step 1 - Setting up Angular
 
-We are going to use Angular CLI to initialize the basecode for your application. Make sure you have angular CLI 1.4+ installed on your computer `npm install @angular/cli@1.4.9 -g`, this tutorial does not work with angular CLI 1.5, if you want to know more you can follow this [issue](https://github.com/cloudinary/cloudinary_angular/issues/114).
+We are going to use Angular CLI to initialize the basecode for your application. Make sure you have angular CLI installed on your computer.
 
 To create the project run `ng new angular-pwa`
 
@@ -293,7 +293,7 @@ Adding a `src/manifest.json` is essential if you want your app to look like a na
 We also need a image to be displayed when you install your app in your device. We used this image [here](https://github.com/glauberramos/cloudinary-pwa-angular/blob/master/src/cloudinary.png), and we added inside `src` folder.
 
 Everytime you run `npm run build`, all the files for your application are generated inside `dist` folder. Since we added two new files we need to update the code for copying those files as well.
- 
+
 We need to make `angular-cli.json` to copy the manifest.json and our logo `cloudinary.png` to `dist` folder. You can make this happen with this change:
 
 ```json
@@ -327,9 +327,9 @@ You can check the final code for this step [here](https://github.com/glauberramo
 
 # Final step - Deploy
 
-Now that we finished the code you can run `npm run build` and go inside `dist` folder. We used Surge to host our app, but you can use any service for that. 
+Now that we finished the code you can run `npm run build` and go inside `dist` folder. We used CodePen to host our app, but you can use any service for that.
 
-If you want to use Surge you need to have it installed `npm install -g surge` and then just run `surge` inside the `dist` folder. You can check our app live here [https://angular-pwa.surge.sh/](https://angular-pwa.surge.sh/). Just make sure you access it using HTTPS because PWAs requires secure access.
+You can check the project [here](https://codepen.io/glauberramos/project/editor/DnaLdk) and the live version [here](https://codepen.io/glauberramos/project/live/DnaLdk/).
 
 If you want to check if your files are really being cached, go inside the tab `network` on chrome developer tools. The column Size should contain `(from ServiceWorker)`.
 
@@ -339,4 +339,4 @@ If you want to check if your files are really being cached, go inside the tab `n
 
 It's crucial nowadays to optmize for slow connections and for mobile devices. PWA's solves those problem very easily, and with the power of Workbox and Cloudinary you can transform your app into a PWA very easily.
 
-The full code for this project can be found on [Github](https://github.com/glauberramos/cloudinary-pwa-angular) and you can check the live version [here](https://angular-pwa.surge.sh/).
+The full code for this project can be found on [Github](https://github.com/glauberramos/cloudinary-pwa-angular).
